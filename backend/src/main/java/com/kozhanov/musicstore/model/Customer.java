@@ -1,6 +1,7 @@
 package com.kozhanov.musicstore.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -78,6 +79,14 @@ public class Customer {
         this.orders = orders;
     }
 
+    public void addOrders(Order order) {
+        if(orders == null){
+            orders = new HashSet<>();
+        }
+        this.orders.add(order);
+    }
+
+
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -86,5 +95,11 @@ public class Customer {
         this.reviews = reviews;
     }
 
-    // Геттеры и сеттеры
+    public void addReviews(Review review) {
+        if(reviews == null){
+            reviews = new HashSet<>();
+        }
+        this.reviews.add(review);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.kozhanov.musicstore.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -66,6 +67,13 @@ public class Order {
 
     public Set<OrderDetail> getOrderDetails() {
         return orderDetails;
+    }
+
+    public void addOrderDetail(OrderDetail orderDetail) {
+        if(orderDetails == null){
+            orderDetails = new HashSet<>();
+        }
+        this.orderDetails.add(orderDetail);
     }
 
     public void setOrderDetails(Set<OrderDetail> orderDetails) {
