@@ -18,6 +18,7 @@ public class ApiController {
 
     @GetMapping("/promotions/active")
     public ResponseEntity<?> getActivePromotions() {
+        String[] add = new String[20];
         return new ResponseEntity<>(promotionService.getAllActivePromotions(), HttpStatus.OK);
     }
 

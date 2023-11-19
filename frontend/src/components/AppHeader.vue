@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="header">
 		<header>
 		<div class="navigation__buttons">
 			<a class="navigation__element" href=""><h4>Помощь </h4></a>
@@ -41,17 +41,23 @@ export default{
 }
 </script>
 
-<style>
-
+<style scoped>
+.header{
+	position: relative;
+	margin-bottom: 50px;
+	width: 100%;
+}
 
 
 header{
-	width: 1680px;
+	width: 1360px;
 	height: 100px;
   display: flex;
   justify-content: space-between;
 	align-items: center;
-	padding: 0px 160px;
+	display: flex;
+    margin-left: auto;
+    margin-right: auto
 }
 .navigation__element{
 	margin-right: 25px;
@@ -108,15 +114,38 @@ header{
 }
 
 .category__list__header{
-	padding-left: 160px;
 	margin-top: 15px;
+	width: 1360px;
 	display: flex;
+    margin-left: auto;
+    margin-right: auto
 }
 .item__category{
 	margin-right: 25px;
 	font-size: 14px;
 }
-.sale_item{
+
+.category__list__header .item__category a {
+    color: black;
+		transition: color 0.3s;
+}
+
+/* При наведении на любой элемент в .category__list__header, все ссылки становятся серыми */
+.category__list__header:hover .item__category a {
+
+    color: grey;
+}
+
+/* Но элемент, на который наведен курсор, остается черным */
+.category__list__header .item__category a:hover {
+
+    color: black;
+}
+
+.category__list__header .item__category .sale_item{
 color: #EB5757;
+}
+.category__list__header .item__category .sale_item:hover{
+color: red;
 }
 </style>

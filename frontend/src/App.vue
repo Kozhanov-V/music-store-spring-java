@@ -1,17 +1,21 @@
 <template>
-	<div class="app">
+	<div id="app">
 		<AppHeader/>
+		<router-view></router-view>
+		<AppFooter/>
 	</div>
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader.vue"
+import AppFooter from "@/components/AppFooter.vue"
 
 export default {
 	
 	components:{
-		AppHeader
-	}
+		AppHeader,AppFooter
+	},
+
 }
 </script>
 
@@ -56,6 +60,10 @@ h4{
 a{
 	color: black;
   text-decoration: none;
+}
+p{
+	color: #828282;
+	font-size: 14px;
 }
 .caption{
 	font-family: GrtskPeta-Medium;
