@@ -3,7 +3,6 @@
 		<header>
 		<div class="navigation__buttons">
 			<a class="navigation__element" href=""><h4>Помощь </h4></a>
-			<a class="navigation__element" href=""><h4>Блог </h4></a>
 			<a class="navigation__element" href=""><h4>FAQ </h4></a>
 		</div>
 		<div class="logo">
@@ -13,7 +12,6 @@
 			<button class="navigation__element caption navigation__action__element" @click="$router.push('/login')"><img src="/imgs/userIcon.png" alt="">ВОЙТИ </button>
 			<button class="navigation__element caption navigation__action__element"><img src="/imgs/favoriteIcon.png" alt="">ИЗБРАННОЕ </button>
 			<button class="navigation__element caption navigation__action__element"><img src="/imgs/cartIcon.png" alt="">КОРЗИНА </button>
-			<button class="navigation__element caption navigation__action__element"><img src="/imgs/searchIcon.png" alt="">ПОИСК </button>
 		</div>
 		
 	</header>
@@ -128,6 +126,7 @@ header{
 .category__list__header .item__category a {
     color: black;
 		transition: color 0.3s;
+		font-family: GrtskPeta-Medium;
 }
 
 /* При наведении на любой элемент в .category__list__header, все ссылки становятся серыми */

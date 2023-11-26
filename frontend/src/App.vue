@@ -3,6 +3,15 @@
 		<AppHeader/>
 		<router-view></router-view>
 		<AppFooter/>
+		<vue-slider
+    v-model="value"
+    :min="options.min"
+    :max="options.max"
+    :tooltip="'always'"
+    :tooltip-style="{ backgroundColor: '#E8E8E8', borderColor: '#E8E8E8' }"
+    :process-style="{ backgroundColor: '#FF5252' }"
+    :dot-style="{ borderColor: '#FF5252' }"
+  ></vue-slider>
 	</div>
 </template>
 
