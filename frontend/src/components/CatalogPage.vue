@@ -155,7 +155,7 @@ export default {
 					brand: 'LIB TECH',
 					price: '21000',
 					discount: '10',
-				},
+				}
 			],
 			selectedCategories: [],
 			categories: [

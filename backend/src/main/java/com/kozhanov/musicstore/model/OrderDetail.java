@@ -8,10 +8,12 @@ import javax.persistence.*;
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_detail_id")
     private Integer orderDetailId;
 
     private int quantity;
 
+    @Column(name = "unit_price")
     private double unitPrice;
 
     @ManyToOne

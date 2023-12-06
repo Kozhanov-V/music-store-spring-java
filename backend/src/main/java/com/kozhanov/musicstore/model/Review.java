@@ -8,12 +8,14 @@ import java.sql.Date;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Integer reviewId;
 
     private int rating;
 
     private String comment;
 
+    @Column(name = "review_date")
     private Date reviewDate;
 
     @ManyToOne

@@ -8,14 +8,15 @@ import java.sql.Date;
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "purchase_id")
     private Integer purchaseId;
 
    private int quantity;
 
-
+    @Column(name = "purchasePrice")
    private double purchasePrice;
 
-
+    @Column(name = "purchaseDate")
    private Date purchaseDate;
 
 

@@ -9,14 +9,23 @@ import javax.persistence.*;
 public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "promotion_id")
     private Integer promotionId;
 
     private String title;
     private String description;
     private String imageURL;
+
+    @Column(name = "promotion_link")
     private String promotionLink;
+
+    @Column(name = "start_date")
     private Date startDate;
+
+    @Column(name = "end_date")
     private Date endDate;
+
+    @Column(name = "is_active")
     private boolean isActive;
 
 

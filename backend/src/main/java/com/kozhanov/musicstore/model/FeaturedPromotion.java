@@ -7,8 +7,10 @@ import javax.persistence.*;
 public class FeaturedPromotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "featured_Promotion_id")
     private Integer featuredPromotionId;
 
+    @Column(name = "displayOrder")
     private Integer displayOrder;
 
     @ManyToOne

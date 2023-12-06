@@ -10,12 +10,15 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_Id")
     private Integer orderId;
 
+    @Column(name = "order_date")
     private Date orderDate;
 
     private String status;
 
+    @Column(name = "total_amount")
     private double totalAmount;
 
     @ManyToOne

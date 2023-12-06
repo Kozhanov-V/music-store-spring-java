@@ -9,7 +9,8 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer categoryId;
+    @Column(name = "category_id")
+    private Integer id;
 
     private String name;
 
@@ -19,11 +20,11 @@ public class Category {
     private Set<Product> products;
 
     public Integer getCategoryId() {
-        return categoryId;
+        return id;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

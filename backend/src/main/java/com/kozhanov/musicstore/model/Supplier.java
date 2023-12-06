@@ -8,11 +8,13 @@ import java.util.Set;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supplier_id")
     private Integer supplierId;
 
-    @Column(length = 255)
+    @Column(length = 255, name = "company_name")
     private String companyName;
 
+    @Column(name = "contact_name")
     private String contactName;
 
     private String phone;

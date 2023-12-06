@@ -9,11 +9,14 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Integer productId;
 
    private String name;
    private String description;
    private double price;
+
+    @Column(name = "stock_quantity")
    private int stockQuantity;
 
     @ManyToOne
@@ -27,6 +30,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<Review> reviews;
 
+    @OneToMany(mappedBy = "product")
+    private Set<ProductAttributeValue> productAttributeValues;
 
     public Integer getProductId() {
         return productId;
