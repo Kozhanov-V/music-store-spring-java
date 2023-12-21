@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "core-js": "^3.8.3",
     "nouislider": "^15.7.1",
     "swiper": "^11.0.4",

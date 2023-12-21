@@ -32,18 +32,19 @@ public class CategoryService {
         this.categoryAttributeRepository = categoryAttributeRepository;
     }
 
-    public Map<Attribute, List<AttributeValue>> getAttributesAndValuesByCategory(Integer categoryId) {
-        Category category = categoryRepository.findById(categoryId)
+    public Map<String, List<AttributeValue>> getAttributesAndValuesByCategory(String nameCategory) {
+        Category category = categoryRepository.findByName(nameCategory)
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
-        List<CategoryAttribute> categoryAttributes = categoryAttributeRepository.findByCategoryId(categoryId);
-
+        List<CategoryAttribute> categoryAttributes = categoryAttributeRepository.findByCategory(category);
 
         return categoryAttributes.stream()
                 .collect(Collectors.toMap(
-                        CategoryAttribute::getAttribute,
-                        ca -> attributeValueRepository.findByAttributeId(ca.getAttribute().getId())
+                        ca -> ca.getAttribute().getName(),
+                        ca -> attributeValueRepository.findByAttributeId(ca.getAttribute().getId()),
+                        (existing, replacement) -> existing
                 ));
     }
+
 
 
 }

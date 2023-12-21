@@ -175,10 +175,11 @@
 
 <script>
 import ImageSlidertwo from "@/components/ImageSlidertwo.vue"
+
 export default {
 
 	components: {
-		ImageSlidertwo
+		ImageSlidertwo,
 	},
 	data() {
 		return {

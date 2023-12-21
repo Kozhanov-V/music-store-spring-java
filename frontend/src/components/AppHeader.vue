@@ -16,26 +16,24 @@
 		
 	</header>
 	<div class="category__list__header">
-			<div class="item__category"><a href="">Новинки</a></div>
-			<div class="item__category"><a href="">Гитары</a></div>
-			<div class="item__category"><a href="">Гитарные струны</a></div>
-			<div class="item__category"><a href="">Педали</a></div>
-			<div class="item__category"><a href="">Клавишные</a></div>
-			<div class="item__category"><a href="">Наушники</a></div>
-			<div class="item__category"><a href="">Коммутация</a></div>
-			<div class="item__category"><a href="">Микрофоны</a></div>
-			<div class="item__category"><a href="">Студия</a></div>
-			<div class="item__category"><a href="">Аксессуары</a></div>
-			<div class="item__category"><a href="">Чехлы и кейсы</a></div>
-			<div class="item__category"><a href="" class="sale_item">Распродажа</a></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'news' }}"> Новинки </router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'guitars' }}">Гитары</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'strings' }}">Гитарные струны</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'pedals' }}">Педали</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'keyboards' }}">Клавишные</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'headphones' }}">Наушники</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'switchs' }}">Коммутация</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'microphones' }}">Микрофоны</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'ateliers' }}">Студия</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'accessories' }}">Аксессуары</router-link></div>
+			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'cases' }}">Чехлы и кейсы</router-link></div>
+			<div class="item__category "><router-link :to="{ name: 'CatalogPage', query: { category: 'sale' }}" class="sale_item">Распродажа</router-link></div>
 		</div>
 	</div>
 	
 </template>
 <script>
-
 export default{
-
 }
 </script>
 

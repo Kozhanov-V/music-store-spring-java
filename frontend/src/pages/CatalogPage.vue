@@ -43,6 +43,9 @@
 				</ul>
 				<h4>Цена, ₽ </h4>
 				<nouiSlide />
+				<div v-for=" attribute in attributesCategory" :key="attribute.name">
+					<filterComponentVue :name="attribute.name" :attributesList="attribute.attributes" />
+				</div>
 				<button class="categories__btn__accept">
 					Применить
 				</button>
@@ -78,14 +81,18 @@
 	</div>
 </template>
 <script>
-import nouiSlide from './nouiSlide.vue';
-
+import nouiSlide from '@/components/nouiSlide.vue';
+import axios from 'axios';
+import filterComponentVue from '@/components/FilterComponent.vue'
 export default {
 	components: {
 		nouiSlide,
+		filterComponentVue,
 	},
 	data() {
 		return {
+			category: null,
+			attributesCategory: [],
 			selectedCategorySales: '',
 			salesCategories: [
 				{ name: 'Все товары', count: 368 },
@@ -179,17 +186,44 @@ export default {
 		selectCategory(name) {
 			this.selectedCategory = name;
 		},
+		async fetchFilterCategories(category) {
+			try {
+				const response = await axios.get(`http://localhost:8080/api/attributes/category/${category}`);
+				this.attributesCategory = response.data;
+
+				this.attributesCategory = Object.keys(response.data).map(key => ({
+            name: key,
+            attributes: response.data[key]
+        }));
+
+			} catch (e) {
+				alert('Ошибка');
+			}
+		},
+
+
+
 	},
 	watch: {
-		selectedCategories() {
-		}
-	},
+        '$route.query.category': {
+            immediate: true,
+            handler(newCategory) {
+							console.log('New category:', newCategory);
+							this.category = newCategory;
+                this.fetchFilterCategories(this.category);
+            }
+        }
+    },
+	mounted() {
+		this.fetchFilterCategories();
+	}
+
 
 
 }
 </script>
 
-<style scoped>
+<style>
 .container__catalog {
 	width: 1360px;
 	position: relative;
@@ -208,16 +242,17 @@ export default {
 	display: flex;
 	align-items: center;
 	position: relative,
-	
-	
+
+
 }
 
 .sort__by p {
 	margin-right: 15px;
-	
+
 
 }
-.sort__by select{
+
+.sort__by select {
 	width: 320px;
 	height: 50px;
 	font-family: GrtskPeta-Medium;
@@ -247,10 +282,12 @@ export default {
 	margin-top: 25px;
 	width: 321px;
 }
-.product-details{
+
+.product-details {
 	margin-top: 10px;
 }
-.product-details p{
+
+.product-details p {
 	margin-top: 5px;
 }
 
@@ -260,12 +297,13 @@ export default {
 	width: 320px;
 	height: 370px;
 }
-.product-image img{
+
+.product-image img {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-    margin-right: -50%;
-    transform: translate(-50%,-50%)
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
 }
 
 .product-discount {
@@ -281,9 +319,11 @@ export default {
 	text-align: left;
 
 }
-.product-price{
+
+.product-price {
 	margin-top: 10px;
 }
+
 .original-price {
 	text-decoration: line-through;
 	/* Зачеркивание для старой цены */
@@ -387,7 +427,8 @@ export default {
 
 
 
-.custom-checkbox-box, .custom-radio-box {
+.custom-checkbox-box,
+.custom-radio-box {
 	position: relative;
 	display: inline-block;
 	width: 16px;
@@ -399,14 +440,15 @@ export default {
 	vertical-align: sub;
 }
 
-.custom-checkbox-box::before, .custom-radio-box::before {
+.custom-checkbox-box::before,
+.custom-radio-box::before {
 	content: '';
 
 	display: inline-block;
 	width: 100%;
 	height: 100%;
 	background-color: #EB5757;
-	background-image: url('checkedCheckBox.svg');
+	background-image: url('@/assets/imgs/checkedCheckBox.svg');
 	background-position: center;
 	background-repeat: no-repeat;
 	border-radius: 50%;
@@ -419,7 +461,8 @@ export default {
 	transition: 0.1s ease-in-out;
 }
 
-.custom-checkbox-input, .custom-radio-input {
+.custom-checkbox-input,
+.custom-radio-input {
 	width: 0;
 	height: 0;
 	opacity: 0;
@@ -427,20 +470,24 @@ export default {
 	z-index: -1;
 }
 
-.custom-checkbox-count, .custom-radio-count {
+.custom-checkbox-count,
+.custom-radio-count {
 	color: grey;
 }
 
-.custom-checkbox-input:checked+.custom-checkbox-box::before,  .custom-radio-input:checked+.custom-radio-box::before{
+.custom-checkbox-input:checked+.custom-checkbox-box::before,
+.custom-radio-input:checked+.custom-radio-box::before {
 	transform: translate(-50%, -50%) scale(1.05);
 }
 
-.custom-checkbox-input:checked~.custom-checkbox-count, .custom-radio-input:checked~.custom-radio-count {
+.custom-checkbox-input:checked~.custom-checkbox-count,
+.custom-radio-input:checked~.custom-radio-count {
 	color: black;
 	transition: 0.2s;
 }
 
-.custom-checkbox-input:checked~.custom-checkbox-name, .custom-radio-input:checked~.custom-radio-name  {
+.custom-checkbox-input:checked~.custom-checkbox-name,
+.custom-radio-input:checked~.custom-radio-name {
 	color: #EB5757;
 	transition: 0.2s;
 }

@@ -28,7 +28,6 @@ public class ApiController {
 
     @GetMapping("/promotions/active")
     public ResponseEntity<?> getActivePromotions() {
-        String[] add = new String[20];
         return new ResponseEntity<>(promotionService.getAllActivePromotions(), HttpStatus.OK);
     }
 
@@ -39,8 +38,8 @@ public class ApiController {
     }
 
     @GetMapping("/attributes/category/{value}")
-    public ResponseEntity<Map<Attribute, List<AttributeValue>>> getAttributesByCategory(@PathVariable("value") int idCategory) {
-        Map<Attribute, List<AttributeValue>> attributes = categoryService.getAttributesAndValuesByCategory(idCategory);
+    public ResponseEntity<Map<String, List<AttributeValue>>> getAttributesByCategory(@PathVariable("value") String nameCategory) {
+        Map<String, List<AttributeValue>> attributes = categoryService.getAttributesAndValuesByCategory(nameCategory);
         return ResponseEntity.ok(attributes);
     }
 
