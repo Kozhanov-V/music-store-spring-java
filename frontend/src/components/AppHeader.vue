@@ -16,7 +16,6 @@
 		
 	</header>
 	<div class="category__list__header">
-			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'news' }}"> Новинки </router-link></div>
 			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'guitars' }}">Гитары</router-link></div>
 			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'strings' }}">Гитарные струны</router-link></div>
 			<div class="item__category"><router-link :to="{ name: 'CatalogPage', query: { category: 'pedals' }}">Педали</router-link></div>

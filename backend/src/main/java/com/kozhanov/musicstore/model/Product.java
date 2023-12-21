@@ -1,5 +1,8 @@
 package com.kozhanov.musicstore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Check;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,18 +22,26 @@ public class Product {
     @Column(name = "stock_quantity")
    private int stockQuantity;
 
+    @Column(name = "discount")
+    @Check(constraints = "discount >= 0 AND discount <= 50")
+   private int discounts;
+
     @ManyToOne
     @JoinColumn(name = "categoryId")
+    @JsonManagedReference
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "brandId")
+    @JsonManagedReference
     private Brand brand;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     private Set<Review> reviews;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     private Set<ProductAttributeValue> productAttributeValues;
 
     public Integer getProductId() {
@@ -97,6 +108,8 @@ public class Product {
         this.reviews = reviews;
     }
 
+
+
     public void addReviews(Review review) {
         if(reviews == null){
             reviews = new HashSet<>();
@@ -104,5 +117,19 @@ public class Product {
         this.reviews.add(review);
     }
 
-    // Геттеры и сеттеры
+    public int getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(int discounts) {
+        this.discounts = discounts;
+    }
+
+    public Set<ProductAttributeValue> getProductAttributeValues() {
+        return productAttributeValues;
+    }
+
+    public void setProductAttributeValues(Set<ProductAttributeValue> productAttributeValues) {
+        this.productAttributeValues = productAttributeValues;
+    }
 }

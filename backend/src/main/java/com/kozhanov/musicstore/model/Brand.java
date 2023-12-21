@@ -1,5 +1,7 @@
 package com.kozhanov.musicstore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ public class Brand {
 
 
     @OneToMany(mappedBy = "brand")
+    @JsonBackReference
     private Set<Product> products;
 
     public Integer getBrandId() {

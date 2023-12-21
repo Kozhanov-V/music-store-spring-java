@@ -62,8 +62,8 @@
 							<span class="product-discount" v-if="item.discount > 0">-{{ item.discount }}%</span>
 						</div>
 						<div class="product-details">
-							<h4>{{ item.brand }}</h4>
-							<p>{{ item.category }}</p>
+							<h4>{{ item.name }}</h4>
+							<p>{{ item.brand }}</p>
 							<div class="product-price">
 								<span class="original-price" v-if="item.discount > 0">{{ item.price
 								}}P</span>
@@ -98,72 +98,7 @@ export default {
 				{ name: 'Все товары', count: 368 },
 				{ name: 'Только со скидкой', count: 48 },
 			],
-			items: [
-				{
-					id: 1,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 2,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 3,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 4,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '10',
-				}, {
-					id: 5,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 6,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 7,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '50',
-				}, {
-					id: 8,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '34392',
-					discount: '0',
-				}, {
-					id: 9,
-					imageUrl: '/imgs/LibTechLogo.png',
-					category: 'Snowboard',
-					brand: 'LIB TECH',
-					price: '21000',
-					discount: '10',
-				}
-			],
+			items: [],
 			selectedCategories: [],
 			categories: [
 				{ name: 'Сноуборды', count: 24 },
@@ -197,10 +132,26 @@ export default {
         }));
 
 			} catch (e) {
-				alert('Ошибка');
+				alert('Ошибка при поиске категории');
 			}
 		},
-
+		async fetchItemsByCategory(category){
+			try {
+				const response = await axios.get(`http://localhost:8080/api/items/category/${category}`);
+				console.log(response)
+				this.items =	response.data.map(element => ({
+					id: element.productId,
+					imageUrl: '/imgs/LibTechLogo.png',
+					brand: element.brand.name,
+					name: element.name,
+					price: element.price,
+					discount: element.discounts,
+				}));
+				console.log(this.items)
+			} catch (e) {
+				alert('Ошибка при загрузке товаров');
+			}
+		}
 
 
 	},
@@ -210,7 +161,9 @@ export default {
             handler(newCategory) {
 							console.log('New category:', newCategory);
 							this.category = newCategory;
-                this.fetchFilterCategories(this.category);
+              this.fetchFilterCategories(this.category);
+              this.fetchItemsByCategory(this.category);
+
             }
         }
     },

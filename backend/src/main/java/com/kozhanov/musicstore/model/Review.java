@@ -1,5 +1,7 @@
 package com.kozhanov.musicstore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -20,6 +22,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "productId")
+    @JsonBackReference
     private Product product;
 
     @ManyToOne
