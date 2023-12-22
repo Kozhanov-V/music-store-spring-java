@@ -16,7 +16,9 @@ public class Product {
     private Integer productId;
 
    private String name;
+
    private String description;
+
    private double price;
 
     @Column(name = "stock_quantity")
@@ -25,6 +27,9 @@ public class Product {
     @Column(name = "discount")
     @Check(constraints = "discount >= 0 AND discount <= 50")
    private int discounts;
+
+@Column(name = "url_on_img")
+    private String urlOnImg;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")
@@ -123,6 +128,14 @@ public class Product {
 
     public void setDiscounts(int discounts) {
         this.discounts = discounts;
+    }
+
+    public String getUrlOnImg() {
+        return urlOnImg;
+    }
+
+    public void setUrlOnImg(String urlOnImg) {
+        this.urlOnImg = urlOnImg;
     }
 
     public Set<ProductAttributeValue> getProductAttributeValues() {

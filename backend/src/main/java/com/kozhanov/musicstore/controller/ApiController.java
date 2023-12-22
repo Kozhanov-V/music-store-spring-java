@@ -2,8 +2,10 @@ package com.kozhanov.musicstore.controller;
 
 
 import com.kozhanov.musicstore.model.AttributeValue;
+import com.kozhanov.musicstore.model.Brand;
 import com.kozhanov.musicstore.model.Product;
 import com.kozhanov.musicstore.model.Promotion;
+import com.kozhanov.musicstore.service.BrandService;
 import com.kozhanov.musicstore.service.CategoryService;
 import com.kozhanov.musicstore.service.ProductService;
 import com.kozhanov.musicstore.service.PromotionService;
@@ -24,10 +26,13 @@ public class ApiController {
 
     private final ProductService productService;
 
-    public ApiController(PromotionService promotionService, CategoryService categoryService, ProductService productService) {
+    private final BrandService brandService;
+
+    public ApiController(PromotionService promotionService, CategoryService categoryService, ProductService productService, BrandService brandService) {
         this.promotionService = promotionService;
         this.categoryService = categoryService;
         this.productService = productService;
+        this.brandService = brandService;
     }
 
     @GetMapping("/promotions/active")
@@ -53,6 +58,9 @@ public class ApiController {
         return ResponseEntity.ok(productList);
     }
 
-
-
+    @GetMapping("/brands/category/{value}")
+    public ResponseEntity<List<Brand>> getBrandsByCategory(@PathVariable("value") String nameCategory) {
+        List<Brand> brandList = brandService.getBrandsByCategoryName(nameCategory);
+        return ResponseEntity.ok(brandList);
+    }
 }

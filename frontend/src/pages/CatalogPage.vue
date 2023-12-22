@@ -3,7 +3,7 @@
 
 
 		<div class="filter__btns">
-			<h2>Название Категории</h2>
+			<h2>{{ this.category }}</h2>
 			<div class="sort__by">
 				<p>Сортировать по:</p>
 				<select name="sort__select" id="sort__select">
@@ -19,13 +19,13 @@
 			<div class="categories">
 				<h4>Бренды товаров</h4>
 				<ul class="categories__list">
-					<li v-for="category in categories" :key="category.name">
+					<li v-for="brand in brands" :key="brand.id">
 						<label class="custom-checkbox">
-							<input type="checkbox" :value="category.name" v-model="selectedCategories" :id="category.name"
+							<input type="checkbox" :value="brand.name" v-model="selectedCategories" :id="brand.id"
 								class="custom-checkbox-input">
 							<span class="custom-checkbox-box"></span>
-							<span class="custom-checkbox-name">{{ category.name }}</span>
-							<span class="custom-checkbox-count"> {{ category.count }}</span>
+							<span class="custom-checkbox-name">{{ brand.name }}</span>
+							<span class="custom-checkbox-count"> {{ brand.count }}</span>
 						</label>
 					</li>
 				</ul>
@@ -58,7 +58,7 @@
 				<a href="" v-for="item in items" :key="item.id">
 					<div class="product">
 						<div class="product-image">
-							<img :src="item.imageUrl" :alt="item.name">
+							<img :src="item.imageUrl" :alt="item.name"  height="270" style="max-width: 270px;">
 							<span class="product-discount" v-if="item.discount > 0">-{{ item.discount }}%</span>
 						</div>
 						<div class="product-details">
@@ -100,15 +100,7 @@ export default {
 			],
 			items: [],
 			selectedCategories: [],
-			categories: [
-				{ name: 'Сноуборды', count: 24 },
-				{ name: 'Крепления', count: 48 },
-				{ name: 'Обувь', count: 60 },
-				{ name: 'Обувь2', count: 61 },
-				{ name: 'Обувь3', count: 62 },
-				{ name: 'Обувь4', count: 63 },
-				{ name: 'Обувь5', count: 64 },
-			]
+			brands: []
 		};
 	},
 	methods: {
@@ -124,7 +116,6 @@ export default {
 		async fetchFilterCategories(category) {
 			try {
 				const response = await axios.get(`http://localhost:8080/api/attributes/category/${category}`);
-				this.attributesCategory = response.data;
 
 				this.attributesCategory = Object.keys(response.data).map(key => ({
             name: key,
@@ -141,7 +132,7 @@ export default {
 				console.log(response)
 				this.items =	response.data.map(element => ({
 					id: element.productId,
-					imageUrl: '/imgs/LibTechLogo.png',
+					imageUrl: element.urlOnImg,
 					brand: element.brand.name,
 					name: element.name,
 					price: element.price,
@@ -151,7 +142,20 @@ export default {
 			} catch (e) {
 				alert('Ошибка при загрузке товаров');
 			}
-		}
+		},
+		async fetchBrandsByCategory(category) {
+			try {
+				const response = await axios.get(`http://localhost:8080/api/brands/category/${category}`);
+				this.brands =	response.data.map(element => ({
+					id: element.brandId,
+					name: element.name,
+					information: element.information
+				}));
+
+			} catch (e) {
+				alert('Ошибка при выборке брендов');
+			}
+		},
 
 
 	},
@@ -163,7 +167,7 @@ export default {
 							this.category = newCategory;
               this.fetchFilterCategories(this.category);
               this.fetchItemsByCategory(this.category);
-
+							this.fetchBrandsByCategory(this.category);
             }
         }
     },
