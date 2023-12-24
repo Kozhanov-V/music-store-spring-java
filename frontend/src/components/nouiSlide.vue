@@ -18,9 +18,14 @@ export default {
   data() {
     return {
       minPrice: 5000,
-      maxPrice: 126456
+      maxPrice: 150456,
     };
   },
+	methods:{
+		updatePrice(minPrice, maxPrice) {
+      this.$emit('update-price', { min: minPrice, max: maxPrice });
+    }
+	},
   mounted() {
     noUiSlider.create(this.$refs.slider, {
       start: [this.minPrice, this.maxPrice],
@@ -43,6 +48,7 @@ export default {
     this.$refs.slider.noUiSlider.on('update', (values) => {
       this.$refs.inputMin.value = values[0];
       this.$refs.inputMax.value = values[1];
+			this.updatePrice(values[0],values[1]);
     });
   }
 };

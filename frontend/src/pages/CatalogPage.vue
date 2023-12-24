@@ -21,7 +21,7 @@
 				<ul class="categories__list">
 					<li v-for="brand in brands" :key="brand.id">
 						<label class="custom-checkbox">
-							<input type="checkbox" :value="brand.name" v-model="selectedCategories" :id="brand.id"
+							<input type="checkbox" :value="brand.name" v-model="filtersParam.listBrands" :id="brand.id"
 								class="custom-checkbox-input">
 							<span class="custom-checkbox-box"></span>
 							<span class="custom-checkbox-name">{{ brand.name }}</span>
@@ -33,7 +33,7 @@
 				<ul>
 					<li v-for="category in salesCategories" :key="category.name">
 						<label class="custom-radio">
-							<input type="radio" :value="category.name" v-model="selectedCategorySales" :id="category.name"
+							<input type="radio" :value="category.value" v-model="filtersParam.withDiscount" :id="category.name"
 								class="custom-radio-input" :checked="category.name === salesCategories[0].name">
 							<span class="custom-radio-box"></span>
 							<span class="custom-radio-name">{{ category.name }}</span>
@@ -42,11 +42,12 @@
 					</li>
 				</ul>
 				<h4>Цена, ₽ </h4>
-				<nouiSlide />
+				<nouiSlide @update-price="handleUpdatePrice" />
 				<div v-for=" attribute in attributesCategory" :key="attribute.name">
-					<filterComponentVue :name="attribute.name" :attributesList="attribute.attributes" />
+					<filterComponentVue :name="attribute.name" :attributesList="attribute.attributes"
+						@update-attributes="handleUpdateAttributes" />
 				</div>
-				<button class="categories__btn__accept">
+				<button class="categories__btn__accept" @click="fetchItemsByFilterParams()">
 					Применить
 				</button>
 				<button class="categories__btn__reset">
@@ -58,7 +59,7 @@
 				<a href="" v-for="item in items" :key="item.id">
 					<div class="product">
 						<div class="product-image">
-							<img :src="item.imageUrl" :alt="item.name"  height="270" style="max-width: 270px;">
+							<img :src="item.imageUrl" :alt="item.name" height="270" style="max-width: 270px;">
 							<span class="product-discount" v-if="item.discount > 0">-{{ item.discount }}%</span>
 						</div>
 						<div class="product-details">
@@ -95,12 +96,19 @@ export default {
 			attributesCategory: [],
 			selectedCategorySales: '',
 			salesCategories: [
-				{ name: 'Все товары', count: 368 },
-				{ name: 'Только со скидкой', count: 48 },
+				{ name: 'Все товары', value: false },
+				{ name: 'Только со скидкой', value: true },
 			],
 			items: [],
-			selectedCategories: [],
-			brands: []
+			brands: [],
+			filtersParam: {
+				listBrands: [],
+				minPrice: '',
+				maxPrice: '',
+				withDiscount: false,
+				attributes: {}
+
+			}
 		};
 	},
 	methods: {
@@ -113,24 +121,57 @@ export default {
 		selectCategory(name) {
 			this.selectedCategory = name;
 		},
+		handleUpdatePrice(priceData) {
+			this.filtersParam.minPrice = priceData.min;
+			this.filtersParam.maxPrice = priceData.max;
+		},
+		handleUpdateAttributes(updatedAttributes) {
+
+			for (const [key, value] of Object.entries(updatedAttributes)) {
+				console.log(key + "   " + value);
+				this.filtersParam.attributes[key] = value;
+			}
+		},
+		async fetchItemsByFilterParams() {
+			try {
+				this.filtersParam.minPrice = this.filtersParam.minPrice.replace(/\D/g, '');
+				this.filtersParam.maxPrice = this.filtersParam.maxPrice.replace(/\D/g, '');
+
+				const attributesParam = JSON.stringify(this.filtersParam.attributes);
+				const response = await axios.get(`http://localhost:8080/api/items/filter?category=${this.category}&listBrands=${this.filtersParam.listBrands}&minPrice=${this.filtersParam.minPrice}&maxPrice=${this.filtersParam.maxPrice}&withDiscount=${this.filtersParam.withDiscount}&attributes=${encodeURIComponent(attributesParam)}`);
+			
+				this.items = response.data.map(element => ({
+					id: element.productId,
+					imageUrl: element.urlOnImg,
+					brand: element.brand.name,
+					name: element.name,
+					price: element.price,
+					discount: element.discounts,
+			
+			}));
+			
+			} catch (e) {
+				console.log('Ошибка при поиске по категории');
+			}
+		},
 		async fetchFilterCategories(category) {
 			try {
 				const response = await axios.get(`http://localhost:8080/api/attributes/category/${category}`);
 
 				this.attributesCategory = Object.keys(response.data).map(key => ({
-            name: key,
-            attributes: response.data[key]
-        }));
+					name: key,
+					attributes: response.data[key]
+				}));
 
 			} catch (e) {
-				alert('Ошибка при поиске категории');
+				console.log('Ошибка при поиске по категории')
 			}
 		},
-		async fetchItemsByCategory(category){
+		async fetchItemsByCategory(category) {
 			try {
 				const response = await axios.get(`http://localhost:8080/api/items/category/${category}`);
 				console.log(response)
-				this.items =	response.data.map(element => ({
+				this.items = response.data.map(element => ({
 					id: element.productId,
 					imageUrl: element.urlOnImg,
 					brand: element.brand.name,
@@ -146,7 +187,7 @@ export default {
 		async fetchBrandsByCategory(category) {
 			try {
 				const response = await axios.get(`http://localhost:8080/api/brands/category/${category}`);
-				this.brands =	response.data.map(element => ({
+				this.brands = response.data.map(element => ({
 					id: element.brandId,
 					name: element.name,
 					information: element.information
@@ -160,17 +201,17 @@ export default {
 
 	},
 	watch: {
-        '$route.query.category': {
-            immediate: true,
-            handler(newCategory) {
-							console.log('New category:', newCategory);
-							this.category = newCategory;
-              this.fetchFilterCategories(this.category);
-              this.fetchItemsByCategory(this.category);
-							this.fetchBrandsByCategory(this.category);
-            }
-        }
-    },
+		'$route.query.category': {
+			immediate: true,
+			handler(newCategory) {
+				console.log('New category:', newCategory);
+				this.category = newCategory;
+				this.fetchFilterCategories(this.category);
+				this.fetchItemsByCategory(this.category);
+				this.fetchBrandsByCategory(this.category);
+			}
+		}
+	},
 	mounted() {
 		this.fetchFilterCategories();
 	}

@@ -5,6 +5,7 @@ import com.kozhanov.musicstore.repository.BrandRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BrandServiceImpl implements BrandService{
@@ -17,5 +18,10 @@ public class BrandServiceImpl implements BrandService{
     @Override
     public List<Brand> getBrandsByCategoryName(String name) {
         return brandRepository.findBrandsByCategoryName(name);
+    }
+
+    @Override
+    public Optional<Brand> getBrandByName(String name) {
+        return brandRepository.findByName(name);
     }
 }
