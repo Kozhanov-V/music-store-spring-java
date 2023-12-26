@@ -1,14 +1,9 @@
 package com.kozhanov.musicstore.specifications;
 
-import com.kozhanov.musicstore.model.AttributeValue;
-import com.kozhanov.musicstore.model.Brand;
-import com.kozhanov.musicstore.model.Product;
-import com.kozhanov.musicstore.model.ProductAttributeValue;
+import com.kozhanov.musicstore.model.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,27 +49,29 @@ public class ProductSpecifications {
 
 
     public static Specification<Product> byAttributes(HashMap<String, List<String>> attributes) {
-        return (root, query, criteriaBuilder) -> {
-            if (attributes == null || attributes.isEmpty()) return null;
+        return (Root<Product> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (attributes == null || attributes.isEmpty()) {
+                return null;
+            }
 
             List<Predicate> predicates = new ArrayList<>();
             for (Map.Entry<String, List<String>> entry : attributes.entrySet()) {
-                if (!(entry.getValue() instanceof List)) {
-                    // Обработка ошибки или логирование
+                List<String> values = entry.getValue();
+                if (values == null || values.isEmpty()) {
                     continue;
                 }
 
-                List<String> values = entry.getValue();
-                Join<Product, ProductAttributeValue> attributeValueJoin = root.join("productAttributeValues");
-                Join<ProductAttributeValue, AttributeValue> attributeJoin = attributeValueJoin.join("attributeValue");
+                Join<Product, ProductAttributeValue> productAttributeValueJoin = root.join("productAttributeValues");
+                Join<ProductAttributeValue, AttributeValue> attributeValueJoin = productAttributeValueJoin.join("attributeValue");
+                Join<AttributeValue, Attribute> attributeJoin = attributeValueJoin.join("attribute");
 
-                CriteriaBuilder.In<String> inClause = criteriaBuilder.in(attributeJoin.get("value"));
+                CriteriaBuilder.In<String> inClause = criteriaBuilder.in(attributeValueJoin.get("value"));
                 for (String value : values) {
-                    inClause.value(value);
+                    inClause = inClause.value(value);
                 }
 
                 predicates.add(criteriaBuilder.and(
-                        criteriaBuilder.equal(attributeJoin.get("attribute").get("name"), entry.getKey()),
+                        criteriaBuilder.equal(attributeJoin.get("name"), entry.getKey()),
                         inClause
                 ));
             }

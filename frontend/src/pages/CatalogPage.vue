@@ -138,6 +138,7 @@ export default {
 				this.filtersParam.maxPrice = this.filtersParam.maxPrice.replace(/\D/g, '');
 
 				const attributesParam = JSON.stringify(this.filtersParam.attributes);
+				console.log(attributesParam)
 				const response = await axios.get(`http://localhost:8080/api/items/filter?category=${this.category}&listBrands=${this.filtersParam.listBrands}&minPrice=${this.filtersParam.minPrice}&maxPrice=${this.filtersParam.maxPrice}&withDiscount=${this.filtersParam.withDiscount}&attributes=${encodeURIComponent(attributesParam)}`);
 			
 				this.items = response.data.map(element => ({

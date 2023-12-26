@@ -1,6 +1,9 @@
 package com.kozhanov.musicstore.controller;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kozhanov.musicstore.dto.FilterParamsDTO;
 import com.kozhanov.musicstore.model.AttributeValue;
 import com.kozhanov.musicstore.model.Brand;
 import com.kozhanov.musicstore.model.Product;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -67,26 +71,20 @@ public class ApiController {
     }
 
     @GetMapping("/items/filter")
-    public ResponseEntity<List<Product>> getItemsByFilterParams( @RequestParam String category,
-                                                            @RequestParam List<String> listBrands,
-                                                            @RequestParam int minPrice,
-                                                            @RequestParam int maxPrice,
-                                                            @RequestParam boolean withDiscount,
-                                                            @RequestParam HashMap<String, List<String>> attributes) {
+    public ResponseEntity<List<Product>> getItemsByFilterParams( @ModelAttribute FilterParamsDTO filterParams) {
 
 
-        System.out.println(category);
-        System.out.println(listBrands);
-        System.out.println(minPrice);
-        System.out.println(maxPrice);
-        System.out.println(withDiscount);
-        System.out.println(attributes);
+        System.out.println(filterParams);
+
         // Проверка на null и пустоту списка
-        if (listBrands == null || listBrands.isEmpty()) {
+        if (filterParams.getListBrands() == null || filterParams.getListBrands().isEmpty()) {
             new IllegalStateException("List is empty");
         }
 
-        List<Brand> brands = listBrands.stream()
+        HashMap<String, List<String>> attributesMap = parseAttributes(filterParams.getAttributes());
+
+
+        List<Brand> brands = filterParams.getListBrands().stream()
                 .map(brandService::getBrandByName)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -94,13 +92,30 @@ public class ApiController {
 
         Specification<Product> spec = Specification.where(null);
 
-        spec = spec.and(ProductSpecifications.byCategory(category));
+        spec = spec.and(ProductSpecifications.byCategory(filterParams.getCategory()));
         spec = spec.and(ProductSpecifications.byBrand(brands));
-        spec = spec.and(ProductSpecifications.priceInRange(minPrice, maxPrice));
-        spec = spec.and(ProductSpecifications.withDiscount(withDiscount));
-        spec = spec.and(ProductSpecifications.byAttributes(attributes));
+        spec = spec.and(ProductSpecifications.priceInRange(filterParams.getMinPrice(), filterParams.getMaxPrice()));
+        if(filterParams.isWithDiscount())
+        spec = spec.and(ProductSpecifications.withDiscount(filterParams.isWithDiscount()));
+        spec = spec.and(ProductSpecifications.byAttributes(attributesMap));
 
         List<Product> products =  productService.findBySpecification(spec);
         return ResponseEntity.ok(products);
     }
+
+    private HashMap<String, List<String>> parseAttributes(String attributesStr) {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<HashMap<String, List<String>>> typeRef = new TypeReference<HashMap<String, List<String>>>() {};
+        HashMap<String, List<String>> attributesMap;
+
+        try {
+            attributesMap = mapper.readValue(attributesStr, typeRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+
+        return attributesMap;
+    }
+
 }
