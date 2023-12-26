@@ -93,6 +93,7 @@ public class ApiController {
         Specification<Product> spec = Specification.where(null);
 
         spec = spec.and(ProductSpecifications.byCategory(filterParams.getCategory()));
+        if(!brands.isEmpty())
         spec = spec.and(ProductSpecifications.byBrand(brands));
         spec = spec.and(ProductSpecifications.priceInRange(filterParams.getMinPrice(), filterParams.getMaxPrice()));
         if(filterParams.isWithDiscount())
