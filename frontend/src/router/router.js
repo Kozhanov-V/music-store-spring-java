@@ -17,7 +17,7 @@ const routes = [
 	},
 	{
 		path:'/account',
-		name:'CatalogPage',
+		name:'PersonalAccountPage',
 		component: PersonalAccountPageVue
 	},
 

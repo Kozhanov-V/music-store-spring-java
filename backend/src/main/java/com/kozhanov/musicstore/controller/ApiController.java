@@ -60,7 +60,14 @@ public class ApiController {
 
     @GetMapping("/items/category/{value}")
     public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("value") String nameCategory) {
+        System.out.println(nameCategory);
         List<Product> productList = productService.getProductsByCategory(nameCategory);
+        return ResponseEntity.ok(productList);
+    }
+
+    @GetMapping("/items/user/{value}")
+    public ResponseEntity<List<Product>> getProductsByUserId(@PathVariable("value") int id) {
+        List<Product> productList = productService.getProductsByCategory("guitars").stream().limit(3).collect(Collectors.toList());
         return ResponseEntity.ok(productList);
     }
 

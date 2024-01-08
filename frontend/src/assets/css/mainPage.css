@@ -1,0 +1,171 @@
+
+.slider__companies {
+	margin-top: 60px;
+	width: 1360px;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 60px;
+}
+
+.promotion h3 {
+	margin-top: -3px;
+	width: 667px;
+	height: 70px;
+	background-color: black;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.promotions {
+	display: flex;
+	width: 1360px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+.promotion {
+	margin-right: 25px;
+}
+
+.container__second__block {
+	margin-top: 100px;
+	width: 1360px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container__second__block h2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 50px;
+}
+
+.container__second__block button {
+	width: 320px;
+	height: 50px;
+	display: flex;
+	margin-left: auto;
+	margin-right: auto;
+	align-items: center;
+	justify-content: center;
+	margin-top: 75px;
+	background-color: black;
+	color: white;
+	cursor: pointer;
+}
+
+.new__items__container {
+	display: flex;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.new__item {
+	margin-right: 25px;
+}
+
+.new__item img {
+	margin-bottom: 55px;
+}
+
+.new__item * {
+	margin-bottom: 5px;
+}
+
+.third__block__container {
+	margin-top: 100px;
+	width: 1360px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.third__block__container h3 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 25px;
+}
+
+.third__block__container p {
+	text-align: justify;
+	margin-top: 10px;
+}
+
+.container__four__block {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1360px;
+	display: flex;
+	margin-top: 100px;
+}
+
+.promotion__four_block {
+	display: flex;
+	width: 668px;
+	height: 789px;
+	background-repeat: no-repeat;
+	background-size: cover; /* Заставляет изображение заполнять весь блок */
+	background-position: center; /* Центрирует изображение */
+	color: white;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-right: 25px;
+}
+.promotion__four_block * {
+text-align: center;
+margin-top: 25px;
+}
+.promotion__four_block h4{
+	margin-top: 15px;
+}
+
+#promotion__four_block_1 button{
+	width: 292px;
+	height: 50px;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+
+}
+
+#promotion__four_block_2 button{
+	width: 401px;
+	height: 50px;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+
+}
+
+
+.promotion__four_block::before {
+	content: ''; 
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.35); 
+	z-index: 1; 
+}
+
+.container__info__of__promotion {
+	z-index: 2; /* Убедитесь, что текст и элементы поверх фильтра */
+	position: relative;
+}
+
+#promotion__four_block_1 {
+	background-image: url('C:\Users\vkozh\Documents\GitHub\music-store-spring-java\frontend\public\imgs\promotionFour1.jpg');
+}
+#promotion__four_block_2 {
+background-image: url('C:\Users\vkozh\Documents\GitHub\music-store-spring-java\frontend\public\imgs\promotionFour2.jpg');
+}

@@ -67,7 +67,7 @@ p{
 }
 .caption{
 	font-family: GrtskPeta-Medium;
-	font-size: 8px;
+	font-size: 12px;
 }
 
 *{

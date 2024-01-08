@@ -1,0 +1,121 @@
+
+.footer {
+	color: #F2F2F2;
+	background-color: black;
+	font-family: 'Your font', sans-serif;
+	padding: 20px;
+	font-size: 14px;
+	margin-top: 100px;
+}
+
+.footer-container {
+	width: 1360px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.footer-top {
+	margin-bottom: 20px;
+}
+
+.footer-top,
+.footer-middle,
+.footer-bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.footer-apps {
+	/* Adjust as per your layout */
+}
+
+.app-link img {
+	/* Set appropriate sizes */
+}
+
+.qr-code img {
+	/* Set appropriate sizes */
+}
+
+.footer-signup h4 {
+	margin-bottom: 10px;
+}
+
+.signup-btn {
+	/* Style your button */
+}
+
+.footer-middle {
+	border-top: 1px solid #333;
+	/* Adjust color to match design */
+	border-bottom: 1px solid #333;
+
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.footer-social-media *{
+	margin: 5px;
+}
+
+.footer-contact p {
+	margin-top: 10px;
+}
+
+.footer-contact h3 {}
+
+.footer-contact h4 {
+}
+.first-contact-element{
+	margin-top: 32px;
+}
+.contacts-element{
+	display: flex;
+}
+.contact-info{
+	margin-left: 25px;
+}
+.contacts-element{
+	margin-bottom: 20px;
+}
+
+.footer-links {
+	display: flex;
+
+}
+
+.footer-links a {
+	color: #BDBDBD;
+	margin-top: 20px;
+}
+
+.footer-links .links-column {
+	margin-right: 40px;
+	/* Adjust spacing */
+}
+
+.links-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.links-column {
+	margin-bottom: 5px;
+}
+
+.footer-bottom {
+	padding-top: 20px;
+}
+
+.social-media {
+	/* Add styles for your social media icons */
+}
+
+.social-media a {
+	margin-right: 10px;
+}
+
+.copyright {
+	text-align: right;
+}

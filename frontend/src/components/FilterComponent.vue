@@ -30,7 +30,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped src="@/assets/css/catalogPage.css">
 
 
 </style>

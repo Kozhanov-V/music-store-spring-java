@@ -1,0 +1,224 @@
+/* Base styles for body to reset any margins and set font */
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
+p{
+	font-family: GrtskPeta-Medium;
+}
+/* The container for all blocks, set up as a grid with two columns */
+.container__blocks__account {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 20px;
+	max-width: 1366px;
+}
+
+/* Base styles for each block */
+.block__account {
+	background: #F9F9F9;
+	width: 667px;
+	height: 415px;
+}
+
+/* Header styles within each block */
+.header__block__account {
+	border-bottom: 1px solid #CED4D7;
+	padding: 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header__block__account h3 {
+	margin: 0;
+	font-size: 1.2em;
+}
+.header__block__account span{
+	font-size: 16px;
+	color: #828B8D;
+}
+
+.header__block__account .caption {
+	color: #828B8D;
+	text-decoration: underline;
+	font-size: 0.9em;
+	cursor: pointer;
+}
+
+/* Body styles within each block */
+.body__block__account {
+	padding: 16px;
+}
+.about__bonus__account{
+	display: flex;
+	justify-content: space-between;
+}
+
+ol {
+	list-style: none;
+	padding: 0;
+	counter-reset: listCounter;
+}
+
+ol li {
+	counter-increment: listCounter;
+	position: relative;
+	padding-left: 40px; /* Space for the circular number */
+	margin-bottom: 15px; /* Space between items */
+	line-height: 25px; /* Height of the line */
+
+}
+
+ol li::before {
+	content: counter(listCounter);
+	position: absolute;
+	left: 0;
+	top: 10%;
+	width: 21px; /* Width of the circle */
+	height: 21px; /* Height of the circle */
+	line-height: 21px;
+	text-align: center; /* Center the number horizontally */
+	border-radius: 50%; /* Make it round */
+	background-color: #CED4D7; /* Circle color */
+	color: #000000; /* Text color */
+	font-weight: bold; /* Bold text */
+	font-size: 12px;
+
+}
+
+.body__block__account p {
+	font-size: 1em;
+	color: black;
+	font-weight: normal;
+}
+
+.price__basket {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+.about__bonus__account span{
+	color: #828B8D;
+	font-family: GrtskPeta-Medium;
+	display: block;
+}
+
+/* Specific styles for the orders table */
+.body__block__account table {
+	width: 100%;
+}
+
+.body__block__account table th,
+.body__block__account table td {
+	text-align: left;
+	padding: 8px;
+}
+
+
+.catalog__items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 25px;
+
+
+}
+
+.product {
+	margin-top: 25px;
+	width: 179px;
+}
+
+.product-details {
+	margin-top: 10px;
+}
+
+.product-details p {
+	margin-top: 5px;
+}
+
+.product-image {
+	position: relative;
+	background-color: #F9F9F9;
+	width: 179px;
+	height: 207px;
+}
+
+.product-image img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+.product-discount {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: #EB5757;
+	color: white;
+	padding: 5px;
+}
+
+.product-details {
+	text-align: left;
+
+}
+
+.product-price {
+	margin-top: 10px;
+}
+
+.original-price {
+	text-decoration: line-through;
+	/* Зачеркивание для старой цены */
+	color: #A5A5A5;
+	margin-right: 15px;
+	font-family: GrtskPeta-Medium;
+	font-size: 16px;
+	/* Серый цвет для старой цены, если хотите сделать его менее заметным */
+}
+
+.final-price {
+	color: #EB5757;
+	font-family: GrtskPeta-Medium;
+	font-size: 16px;
+}
+
+/* Стиль для цены без скидки */
+.product-price .final-price:not(.discounted) {
+	color: black;
+	/* Белый или другой цвет по умолчанию для цены без скидки */
+}
+
+.product-add-to-cart {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: black;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+/* Adjust the last block to be centered */
+.container__blocks__account > :last-child {
+	grid-column: span 2;
+	justify-self: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.container__blocks__account {
+			grid-template-columns: 1fr;
+	}
+}
+.personal__info{
+	display: flex;
+}
+.personal__info div{
+	width: 239px;
+	margin-right: 67px;
+	line-height: 30px;
+}
